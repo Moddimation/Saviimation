@@ -16,11 +16,15 @@ GXRModeObj*  rmode;
 
 void
 cbPower ()
-{}
+{
+    SYS_ResetSystem (SYS_POWEROFF, 0, 0);
+}
 
 void
 cbReset (u32 irq, void* ctx)
-{}
+{
+    exit (0);
+}
 
 void
 cbHome ()
@@ -31,8 +35,8 @@ cbHome ()
 void
 init ()
 {
-    /*SYS_SetPowerCallback(cbPower);
-    SYS_SetResetCallback(cbReset);*/
+    SYS_SetPowerCallback (cbPower);
+    SYS_SetResetCallback (cbReset);
 
     if (PAD_Init() == PAD_ERR_TRANSFER)
     {

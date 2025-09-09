@@ -5,6 +5,7 @@
 
 #include "menu_main.h"
 #include "menuman.h"
+#include "ui.h"
 #include "util.h"
 
 extern GXRModeObj* rmode;
@@ -72,7 +73,7 @@ Menu_Clear ()
 bool
 Menu_Update (MenuEntry* menu)
 {
-    int w, h, x, y;
+    int w, h;
 
     Menu_StartPos();
 
@@ -105,13 +106,10 @@ Menu_Update (MenuEntry* menu)
     (void)w;
     (void)h;
 
-    x = 0;
-    y = 0;
-
-    printf (DEF_APP_NAME ": %s", menu->longTitle.text);
+    Ui_Printf (DEF_APP_NAME ": %s", menu->longTitle.text);
 
     Util_StrSetX (Util_StrCalcXRightAligned (charNum_h, CREDIT_DEV));
-    printf (CREDIT_DEV);
+    Ui_Print (CREDIT_DEV);
 
     PRINT_SEP;
     PRINT_MT;
@@ -139,9 +137,11 @@ Menu_Update (MenuEntry* menu)
     if (menu->postupdate != NULL)
         menu->postupdate (menu);
 
+    Ui_Update();
+
     Util_StrSetY (Util_StrCalcYBottomAligned (charNum_v));
     PRINT_SEP;
-    printf (CTRL_HELP);
+    Ui_Print (CTRL_HELP);
 
     return true;
 }

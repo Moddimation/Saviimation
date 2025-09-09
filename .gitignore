@@ -1,7 +1,9 @@
 dest/main.dol
-dest/icon.xcf
 build/
+priv/
 .cache/
 *.dol
+*.zip
+*.xcf
 *.elf
 compile_commands.json

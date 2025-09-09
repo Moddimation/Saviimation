@@ -122,7 +122,10 @@ clean:
 
 #---------------------------------------------------------------------------------
 run:
-	wiiload $(TARGET).dol
+	mv dest $(TARGET)
+	zip -r dest.zip $(TARGET)
+	mv $(TARGET) dest
+	wiiload dest.zip
 
 
 COMPILE_COMMANDS_FILE := compile_commands.json
@@ -189,7 +192,7 @@ endef
 	@elf2dol $< $@
 	@mv "$<" .
 	@mkdir -p "../$(OUT)"
-	@mv "$@" "../$(OUT)/main.dol"
+	@mv "$@" "../$(OUT)/boot.dol"
 
 fix_compile_commands:
 	@if [ -n "$(NEW)" ]; then \
