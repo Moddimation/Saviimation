@@ -5,8 +5,8 @@
 
 static void menu_test_listtitles_init (MenuEntry* menu);
 
-const MenuEntry gMenu_Test_ListTitles = Menu (Label ("Test - List Titles"),
-                                              Label ("test_listtitle"),
+MenuEntry gMenu_Test_ListTitles = Menu (Label ("Test - List Titles"),
+                                              Label ("test_listtitle"), NULL,
                                               menu_test_listtitles_init);
 
 

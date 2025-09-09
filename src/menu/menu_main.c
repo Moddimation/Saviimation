@@ -5,13 +5,15 @@
 static void cbTest ();
 static void cbMenWii ();
 static void cbMenSD ();
+static void menu_main_init (MenuEntry*);
 
-const MenuEntry gMenu_Main = Menu (Label ("Main Menu"),
-                                   Label ("main"),
-                                   NULL,
-                                   Button ((Label ("Test Menu")), cbTest),
-                                   Button ((Label ("Wii Saves")), cbMenWii),
-                                   Button ((Label ("Backups")), cbMenSD));
+MenuEntry gMenu_Main = Menu (Label ("Main Menu"),
+                             Label ("main"),
+                             menu_main_init,
+                             NULL,
+                             Button ((Label ("Test Menu")), cbTest),
+                             Button ((Label ("Wii Saves")), cbMenWii),
+                             Button ((Label ("Backups")), cbMenSD));
 
 static void
 cbTest ()
@@ -26,3 +28,9 @@ cbMenWii ()
 static void
 cbMenSD ()
 {}
+
+static void
+menu_main_init (MenuEntry* m)
+{
+    m->isBase = true;
+}

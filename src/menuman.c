@@ -6,8 +6,10 @@
 #include "menu.h"
 #include "menu/menu_main.h"
 
-u8               buttonSelIdx = 0;
-static MenuEntry menu         = {};
+u8                buttonSelIdx = 0;
+static MenuEntry* menuHistory[1024];
+static u32        menuHistoryIdx = 0;
+static MenuEntry  menu           = {};
 
 void
 MenuMan_Init ()
@@ -41,9 +43,13 @@ handleInput (u32 down_wii, u32 down_gc)
     }
     if (PRESSED (B, B, B))
     {
-        if (menu.prevPtr != NULL)
+        if (!menu.isBase)
         {
-            MenuMan_SetMenu (menu.prevPtr);
+            menuHistoryIdx -= 2;
+            if (menuHistoryIdx < 0)
+                menuHistoryIdx = 1024 - (0 - menuHistoryIdx);
+
+            MenuMan_SetMenu (menuHistory[menuHistoryIdx]);
         }
     }
 }
@@ -56,10 +62,10 @@ MenuMan_Update (u32 down_wii, u32 down_gc)
 }
 
 bool
-MenuMan_SetMenu (const MenuEntry* m)
+MenuMan_SetMenu (MenuEntry* m)
 {
-    const MenuEntry* __prevMenu = menu.basePtr;
-    char             __path[MAX_PATH];
+    MenuEntry* __prevMenu = menu.basePtr;
+    char       __path[MAX_PATH];
     strcpy (__path, menu.path.text);
     strcat (__path, "/");
 
@@ -73,10 +79,16 @@ MenuMan_SetMenu (const MenuEntry* m)
     strcat (__path, menu.shortTitle.text);
     strcpy (menu.path.text, __path);
 
-    menu.basePtr = m;
-    menu.prevPtr = __prevMenu;
+    menu.basePtr                = m;
+    menu.prevId                 = (__prevMenu == NULL) ? 0 : __prevMenu->id;
 
-    menu.active  = true;
+    menu.active                 = true;
+
+    menuHistory[menuHistoryIdx] = m;
+    menuHistoryIdx              = menuHistoryIdx >= 1024 ? 0 : menuHistoryIdx + 1;
+
+    menu.id                     = m->id;
+    menu.isBase                 = m->isBase;
 
     Menu_Init (&menu);
 

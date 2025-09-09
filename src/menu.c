@@ -28,7 +28,7 @@ void
 Menu_InitStatic ()
 {
     charNum_h   = (rmode->fbWidth / CHAR_WIDTH);
-    charNum_v   = (rmode->efbHeight / CHAR_WIDTH);
+    charNum_v   = (rmode->efbHeight / (CHAR_WIDTH - 1)) - 3;
 
     // initialize separator
     u16 sepSize = 0;

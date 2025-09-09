@@ -4,10 +4,11 @@
 
 static void cbDoListTitles ();
 
-const MenuEntry gMenu_Test = Menu (Label ("Test Menu"),
-                                   Label ("test"),
-                                   NULL,
-                                   Button ((Label ("List all title ID's")), cbDoListTitles));
+MenuEntry gMenu_Test = Menu (Label ("Test Menu"),
+                             Label ("test"),
+                             NULL,
+                             NULL,
+                             Button ((Label ("List all title ID's")), cbDoListTitles));
 
 static void
 cbDoListTitles ()

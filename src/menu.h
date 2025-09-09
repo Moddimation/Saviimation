@@ -57,20 +57,24 @@ typedef struct MenuEntry MenuEntry;
 
 struct MenuEntry
 {
-    bool             active;
-    MenuLabel        longTitle;
-    MenuLabel        shortTitle;
-    MenuLabel        path;    // set when called
-    const MenuEntry* basePtr;
-    const MenuEntry* prevPtr; // previous menu
-    void             (*init) (MenuEntry* menu);
-    MenuButton       options[MAX_BUTTONS];
+    bool       active;
+    bool       isBase;
+    MenuLabel  longTitle;
+    MenuLabel  shortTitle;
+    MenuLabel  path;   // set when called
+    u32        id;     // set when called, from order of calling
+    u32        prevId; // set when called, previous menuId
+    MenuEntry* basePtr;
+    void       (*init) (MenuEntry* menu);
+    void       (*start) (MenuEntry* menu);
+    MenuButton options[MAX_BUTTONS];
 };
 
-#define Menu(longT, shortT, initFunction, ...)                                                 \
+#define Menu(longT, shortT, funcInit, funcStart, ...)                                          \
     (MenuEntry)                                                                                \
     {                                                                                          \
-        false, longT, shortT, LabelE, NULL, NULL, initFunction, Buttons (__VA_ARGS__)          \
+        false, false, longT, shortT, LabelE, 0, 0, NULL, funcInit, funcStart,                  \
+            Buttons (__VA_ARGS__)                                                              \
     }
 
 void Menu_InitStatic ();

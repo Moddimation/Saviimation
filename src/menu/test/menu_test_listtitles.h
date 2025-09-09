@@ -3,6 +3,6 @@
 
 #include "menu.h"
 
-extern const MenuEntry gMenu_Test_ListTitles;
+extern MenuEntry gMenu_Test_ListTitles;
 
 #endif

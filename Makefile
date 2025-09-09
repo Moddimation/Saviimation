@@ -187,7 +187,7 @@ endef
 %.dol: %.elf
 	@echo "   OUT"
 	@elf2dol $< $@
-	@rm "$<"
+	@mv "$<" .
 	@mkdir -p "../$(OUT)"
 	@mv "$@" "../$(OUT)/main.dol"
 

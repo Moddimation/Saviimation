@@ -7,6 +7,6 @@ typedef struct MenuEntry MenuEntry;
 
 void MenuMan_Init ();
 bool MenuMan_Update (u32 down_wii, u32 down_gc);
-bool MenuMan_SetMenu (const MenuEntry* m);
+bool MenuMan_SetMenu (MenuEntry* m);
 
 #endif
