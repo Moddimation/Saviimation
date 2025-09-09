@@ -1,0 +1,7 @@
+dest/main.dol
+dest/icon.xcf
+build/
+.cache/
+*.dol
+*.elf
+compile_commands.json

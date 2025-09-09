@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<app version="1">
+  <name>Saviimation</name>
+  <coder>Moddimation</coder>
+  <version>indev</version>
+  <!--<release_date>0</release_date>-->
+  <arguments>
+    <arg>-ios=251</arg>
+  </arguments>
+  <ahb_access/>
+  <short_description>Simple Save Backup Tool</short_description> 
+  <long_description>
+I am working on it!
+  </long_description> 
+</app>
