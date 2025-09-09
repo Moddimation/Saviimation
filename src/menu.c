@@ -48,6 +48,9 @@ Menu_Init (MenuEntry* menu)
     }
 
     Menu_Clear();
+
+    if (menu->start != NULL)
+        menu->start (menu);
 }
 
 inline void
@@ -67,7 +70,7 @@ Menu_Clear ()
 }
 
 bool
-Menu_Update (const MenuEntry* menu)
+Menu_Update (MenuEntry* menu)
 {
     int w, h, x, y;
 
@@ -113,6 +116,9 @@ Menu_Update (const MenuEntry* menu)
     PRINT_SEP;
     PRINT_MT;
 
+    if (menu->preupdate != NULL)
+        menu->preupdate (menu);
+
     for (u8 buttonIdx = 0; buttonIdx <= MAX_BUTTONS; ++buttonIdx)
     {
         char str[MAX_LABEL];
@@ -129,6 +135,9 @@ Menu_Update (const MenuEntry* menu)
                   menu->options[buttonIdx].label.text);
         puts (str);
     }
+
+    if (menu->postupdate != NULL)
+        menu->postupdate (menu);
 
     Util_StrSetY (Util_StrCalcYBottomAligned (charNum_v));
     PRINT_SEP;

@@ -11,6 +11,8 @@ MenuEntry gMenu_Main = Menu (Label ("Main Menu"),
                              Label ("main"),
                              menu_main_init,
                              NULL,
+                             NULL,
+                             NULL,
                              Button ((Label ("Test Menu")), cbTest),
                              Button ((Label ("Wii Saves")), cbMenWii),
                              Button ((Label ("Backups")), cbMenSD));

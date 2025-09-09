@@ -67,19 +67,21 @@ struct MenuEntry
     MenuEntry* basePtr;
     void       (*init) (MenuEntry* menu);
     void       (*start) (MenuEntry* menu);
+    void       (*preupdate) (MenuEntry* menu);
+    void       (*postupdate) (MenuEntry* menu);
     MenuButton options[MAX_BUTTONS];
 };
 
-#define Menu(longT, shortT, funcInit, funcStart, ...)                                          \
+#define Menu(longT, shortT, funcInit, funcStart, funcPreUpdate, funcPostUpdate, ...)           \
     (MenuEntry)                                                                                \
     {                                                                                          \
-        false, false, longT, shortT, LabelE, 0, 0, NULL, funcInit, funcStart,                  \
-            Buttons (__VA_ARGS__)                                                              \
+        false, false, longT, shortT, LabelE, 0, 0, NULL, funcInit, funcStart, funcPreUpdate,   \
+            funcPostUpdate, Buttons (__VA_ARGS__)                                              \
     }
 
 void Menu_InitStatic ();
 void Menu_Init (MenuEntry* menu);
-bool Menu_Update (const MenuEntry* menu);
+bool Menu_Update (MenuEntry* menu);
 void Menu_StartPos ();
 void Menu_Clear ();
 void Menu_Print (const char* str, bool clear);

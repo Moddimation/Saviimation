@@ -64,6 +64,9 @@ MenuMan_Update (u32 down_wii, u32 down_gc)
 bool
 MenuMan_SetMenu (MenuEntry* m)
 {
+    if (m->init != NULL)
+        m->init (m);
+
     MenuEntry* __prevMenu = menu.basePtr;
     char       __path[MAX_PATH];
     strcpy (__path, menu.path.text);

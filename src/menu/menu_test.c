@@ -8,6 +8,8 @@ MenuEntry gMenu_Test = Menu (Label ("Test Menu"),
                              Label ("test"),
                              NULL,
                              NULL,
+                             NULL,
+                             NULL,
                              Button ((Label ("List all title ID's")), cbDoListTitles));
 
 static void
