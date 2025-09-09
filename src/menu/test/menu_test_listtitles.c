@@ -8,8 +8,7 @@
 static void menu_test_listtitles_update (MenuEntry* menu);
 
 MenuEntry gMenu_Test_ListTitles = Menu (Label ("Test - List Titles"),
-                                              Label ("test_listtitle"), NULL, NULL, NULL,
-                                              menu_test_listtitles_update);
+                                              Label ("test_listtitle"), NULL, menu_test_listtitles_start, NULL, NULL);
 
 
 static void menu_test_listtitles_update(MenuEntry* menu) {

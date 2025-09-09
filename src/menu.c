@@ -5,7 +5,6 @@
 
 #include "menu_main.h"
 #include "menuman.h"
-#include "ui.h"
 #include "util.h"
 
 extern GXRModeObj* rmode;
@@ -41,11 +40,11 @@ Menu_Init (MenuEntry* menu)
 {
     // flag all valid buttons as visible
     buttonNum = 0;
-    for (; menu->options[buttonNum].label.text[0] != '\0' ||
-           menu->options[buttonNum].action.ptr != NULL;
+    for (; menu->options[buttonNum]->label.text[0] != '\0' ||
+           menu->options[buttonNum]->action.ptr != NULL;
          ++buttonNum)
     {
-        menu->options[buttonNum].flags |= BUTTONFLAG_VISIBLE;
+        menu->options[buttonNum]->flags |= BUTTONFLAG_VISIBLE;
     }
 
     Menu_Clear();
@@ -106,10 +105,10 @@ Menu_Update (MenuEntry* menu)
     (void)w;
     (void)h;
 
-    Ui_Printf (DEF_APP_NAME ": %s", menu->longTitle.text);
+    printf (DEF_APP_NAME ": %s", menu->longTitle.text);
 
     Util_StrSetX (Util_StrCalcXRightAligned (charNum_h, CREDIT_DEV));
-    Ui_Print (CREDIT_DEV);
+    printf (CREDIT_DEV);
 
     PRINT_SEP;
     PRINT_MT;
@@ -121,7 +120,7 @@ Menu_Update (MenuEntry* menu)
     {
         char str[MAX_LABEL];
 
-        if ((menu->options[buttonIdx].flags & BUTTONFLAG_VISIBLE) == false)
+        if ((menu->options[buttonIdx]->flags & BUTTONFLAG_VISIBLE) == false)
         {
             continue;
         }
@@ -130,18 +129,16 @@ Menu_Update (MenuEntry* menu)
                   sizeof (str),
                   "   %c %s",
                   (buttonSelIdx == buttonIdx ? '>' : ' '),
-                  menu->options[buttonIdx].label.text);
+                  menu->options[buttonIdx]->label.text);
         puts (str);
     }
 
     if (menu->postupdate != NULL)
         menu->postupdate (menu);
 
-    Ui_Update();
-
     Util_StrSetY (Util_StrCalcYBottomAligned (charNum_v));
     PRINT_SEP;
-    Ui_Print (CTRL_HELP);
+    printf (CTRL_HELP);
 
     return true;
 }

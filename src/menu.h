@@ -32,7 +32,7 @@ typedef struct
 
 typedef struct
 {
-    void (*ptr)();
+    void (*ptr) (void*);
 } MenuButtonAction;
 
 typedef struct
@@ -57,26 +57,34 @@ typedef struct MenuEntry MenuEntry;
 
 struct MenuEntry
 {
-    bool       active;
-    bool       isBase;
-    MenuLabel  longTitle;
-    MenuLabel  shortTitle;
-    MenuLabel  path;   // set when called
-    u32        id;     // set when called, from order of calling
-    u32        prevId; // set when called, previous menuId
-    MenuEntry* basePtr;
-    void       (*init) (MenuEntry* menu);
-    void       (*start) (MenuEntry* menu);
-    void       (*preupdate) (MenuEntry* menu);
-    void       (*postupdate) (MenuEntry* menu);
-    MenuButton options[MAX_BUTTONS];
+    bool         active;
+    bool         isBase;
+    MenuLabel    longTitle;
+    MenuLabel    shortTitle;
+    MenuLabel    path;   // set when called
+    u32          id;     // set when called, from order of calling
+    u32          prevId; // set when called, previous menuId
+    MenuEntry*   basePtr;
+    void         (*init) (MenuEntry* menu);
+    void         (*start) (MenuEntry* menu);
+    void         (*preupdate) (MenuEntry* menu);
+    void         (*postupdate) (MenuEntry* menu);
+    u32          optionNum;
+    MenuButton** options;
 };
 
-#define Menu(longT, shortT, funcInit, funcStart, funcPreUpdate, funcPostUpdate, ...)           \
+#define Menu(longT,                                                                            \
+             shortT,                                                                           \
+             funcInit,                                                                         \
+             funcStart,                                                                        \
+             funcPreUpdate,                                                                    \
+             funcPostUpdate,                                                                   \
+             optionNum,                                                                        \
+             ...)                                                                              \
     (MenuEntry)                                                                                \
     {                                                                                          \
         false, false, longT, shortT, LabelE, 0, 0, NULL, funcInit, funcStart, funcPreUpdate,   \
-            funcPostUpdate, Buttons (__VA_ARGS__)                                              \
+            funcPostUpdate, optionNum, Buttons (__VA_ARGS__)                                   \
     }
 
 void Menu_InitStatic ();

@@ -22,7 +22,7 @@ MenuMan_Init ()
 void
 handleInput (u32 down_wii, u32 down_gc)
 {
-#define PRESSED(wii, wii_classic, gc) /* wiimote, classic, gamecube */                         \
+#define PRESSED(wii, wii_classic, gc)    /* wiimote, classic, gamecube */                      \
     ((down_wii & WPAD_BUTTON_##wii) || (down_wii & WPAD_CLASSIC_BUTTON_##wii_classic) ||       \
      (down_gc & PAD_BUTTON_##gc))
 
@@ -61,6 +61,19 @@ MenuMan_Update (u32 down_wii, u32 down_gc)
     return Menu_Update (&menu);
 }
 
+void
+freeMenu ()
+{
+    if (menu->options != NULL)
+    {
+        for (u32 i = 0; i < menu->optionsNum; ++i)
+        {
+            if (menu->options[i] != NULL)
+                free menu->options[i];
+        }
+    }
+}
+
 bool
 MenuMan_SetMenu (MenuEntry* m)
 {
@@ -77,6 +90,14 @@ MenuMan_SetMenu (MenuEntry* m)
     {
         Error ("Error copying menu constants");
         return false;
+    }
+
+    menu->options = malloc (sizeog (MenuButton*) * m->optionNum);
+    for (u32 i = 0; i < menu->optionsNum; ++i)
+    {
+        menu->options[i] = malloc (sizeof (MenuButton*));
+        MenuButton* b    = menu->options[i];
+        b->flags         = m->options[i] // just continue this.
     }
 
     strcat (__path, menu.shortTitle.text);
